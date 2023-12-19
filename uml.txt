@@ -1,0 +1,113 @@
+@startuml
+class Pair<T, F> {
+- first : T
+- second : F
++ getFirst() : T
++ getSecond() : F
++ setFirst(T value) : void
++ setSecond(F value) : void
+}
+class People {
+- surname : String
+- name : String
+- patronymic : String
++ getSurname() : String
++ getName() : String
++ getPatronymic() : String
++ toString() : String
++ toShortString() : String
+}
+
+class Client {
++ comeToBank(bank : Bank) : void
+}
+
+class Clerk {
+- dailySalary : double
+- dateOfHire : LocalDate
+- currentTask : Request
+- employment : Map<LocalDate, Duration>
+- completedRequests : Map<LocalDate, ArrayList<Request>
+- lostsRequests : Map<LocalDate, ArrayList<Request>
++ work(secondsStep : long, bank : Bank) : long
++ takeRequest(request : Request) : void
++ getLostRequestsByDate(date : LocalDate) : ArrayList<Request>
++ getLostRequests() : ArrayList<Request>
++ getCompletedRequestsByDate(date : LocalDate) : ArrayList<Request>
++ getCompletedRequests() : ArrayList<Request>
++ getTotalProfitByDate(date : LocalDate) : double
++ getTotalProfit() : double
++ getAverageRequestWaitingDuration() : Duration
++ getAverageEmploymentDuration() : Duration
++ getDailySalary() : double
+}
+
+class Request {
+- number : int
+- price : double
+- client : Client
+- durationService : Duration
+- currentDuration : Duration
+- waitingDuration : Duration
+- dateTimeOfCreation : LocalDateTime
++ service(secondsStep : long) : long
++ waiting(secondsStep : long) : void
++ getWaitingDuration() : Duration
++ getServiceDuration() : Duration
++ isDone() : boolean
+}
+class InfoBoard {
+- currentRequest : Request
+- currentClerk : Clerk
++ work(clerk : Clerk, request : Request, bank : Bank) : void
+}
+class Bank {
+- dateTimeOfCreation : LocalDateTime
+- currentDuration : Duration
+- clerks : HashSet<Clerk>
+- schedule : Map<DayOfWeek, Pair<LocalTime, Duration>>
+- queue : Queue<hz>
+- maxAndMinQueueLength : Map<LocalDate, Pair<Integer, Integer>>
+- reputation : double
+- maxQueueLength : int
+- maxClerksCount : int
+- dailyClerksSalary : double
+- infoBoard : InfoBoard
++ hire(clerk : Clerk) : boolean
++ registerRequest(request : Request) : void
+- workByClerk(secondsStep : long, clerk : Clerk) : long
++ work(secondsStep : long) : void
++ life(secondsStep : long) : void
++ isWork() : boolean
++ isWork(dateTime : LocalDateTime) : boolean
++ getReputation() : double
++ getMinQueueLengthByDate(date : LocalDate) : int
++ getMinQueueLength() : int
++ getMaxQueueLengthByDate(date : LocalDate) : int
++ getMaxQueueLength() : int
++ getAverageQueueLengthByDate(date : LocalDate) : int
++ getAverageQueueLength() : int
++ getNumberOfServedClientsByClerkAndDate(clerk : Clerk, date : LocalDate) : int
++ getNumberOfServedClientsByDate(date : LocalDate) : int
++ getNumberOfServedClientsByClerk(clerk : Clerk) : int
++ getTotalNumberOfServedClients() : int
++ getNumberOfLostClientsByClerkAndDate(clerk : Clerk, date : LocalDate) : int
++ getNumberOfLostClientsByDate(date : LocalDate) : int
++ getNumberOfLostClientsByClerk(clerk : Clerk) : int
++ getTotalNumberOfLostClients() : int
++ getAverageRequestWaitingDuration() : Duration
++ getAverageEmploymentOfClerk(clerk : Clerk) : Duration
++ getAverageEmploymentOfClerks() : Duration
++ getTotalProfitByClerkAndDate(clerk : Clerk, date : LocalDate) : double
++ getTotalProfitByDate(date : LocalDate) : double
++ getTotalProfitByClerk(clerk : Clerk) : double
++ getTotalProfit() : double
++ toString() : String
+}
+class SimulationController {
+- periodOfTimeBetweenAppearanceOfRequests : Pair<Duration, Duration>
+- requestServiceDurationRange : Pair<Duration, Duration>
+}
+People <-- Client
+People <-- Clerk
+@enduml
