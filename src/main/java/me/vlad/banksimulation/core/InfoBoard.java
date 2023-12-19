@@ -5,7 +5,9 @@ import me.vlad.banksimulation.core.human.Clerk;
 public class InfoBoard {
     private Request request;
     private Clerk clerk;
-    public void work(Clerk clerk, Request request, Bank bank) {
+    public void work(Clerk clerk, Request request) {
+        this.clerk = clerk;
+        this.request = request;
         clerk.takeRequest(request);
     }
     public Request getRequest() {
