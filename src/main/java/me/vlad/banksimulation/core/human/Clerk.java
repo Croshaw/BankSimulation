@@ -57,4 +57,29 @@ public class Clerk extends People {
     private LocalDateTime getCurrentDateTime() {
         return dateTimeOfHire.plus(currentDuration);
     }
+    public int getNumberOfServedClientsByDate(LocalDate date) {
+        if(!completedRequests.containsKey(date))
+            return 0;
+        return completedRequests.get(date).size();
+    }
+    public int getNumberOfServedClients() {
+        int number = 0;
+        for(var date : completedRequests.keySet()) {
+            number += completedRequests.get(date).size();
+        }
+        return number;
+    }
+
+    public int getNumberOfLostClientsByDate(LocalDate date) {
+        if(!lostsRequests.containsKey(date))
+            return 0;
+        return lostsRequests.get(date).size();
+    }
+    public int getNumberOfLostClients() {
+        int number = 0;
+        for(var date : lostsRequests.keySet()) {
+            number += lostsRequests.get(date).size();
+        }
+        return number;
+    }
 }
