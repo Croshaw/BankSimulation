@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="1031.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.vlad.banksimulation.MyController">
+   <children>
+      <HBox prefHeight="440.0" prefWidth="995.0">
+         <children>
+            <Canvas fx:id="simulationCanvas" height="365.0" width="838.0" />
+            <VBox alignment="BOTTOM_CENTER" prefHeight="424.0" prefWidth="202.0" spacing="15.0">
+               <children>
+                  <Button fx:id="defSettingsButton" mnemonicParsing="false" onAction="#onDefSettingsButtonClick" text="Стандартные настройки" />
+                  <VBox alignment="CENTER" prefHeight="14.0" prefWidth="213.0">
+                     <children>
+                        <Label text="Скорость" />
+                        <Slider fx:id="speedSlider" max="1.0" min="1.0E-4" value="0.01" />
+                        <Label fx:id="speedSliderInfo" />
+                     </children>
+                  </VBox>
+                  <Button fx:id="saveButton" disable="true" mnemonicParsing="false" onAction="#onSaveButtonClick" prefHeight="22.0" prefWidth="107.0" text="Сохранить" />
+                  <HBox alignment="CENTER" prefHeight="14.0" prefWidth="213.0" spacing="10.0">
+                     <children>
+                        <Button fx:id="pauseButton" disable="true" mnemonicParsing="false" onAction="#onPauseButtonClick" prefHeight="22.0" prefWidth="89.0" text="Пауза" />
+                        <Button fx:id="stopButton" disable="true" mnemonicParsing="false" onAction="#onStopButtonClick" prefHeight="22.0" prefWidth="84.0" text="Остановить" />
+                     </children>
+                  </HBox>
+                  <Button fx:id="startButton" mnemonicParsing="false" onAction="#onStartButtonClick" prefHeight="22.0" prefWidth="83.0" text="Старт" />
+               </children>
+               <HBox.margin>
+                  <Insets bottom="10.0" />
+               </HBox.margin>
+               <padding>
+                  <Insets right="5.0" />
+               </padding>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="67.0" prefWidth="1011.0" spacing="20.0">
+         <children>
+            <TextField fx:id="seedField" prefHeight="22.0" prefWidth="95.0" promptText="Сид" />
+            <TextField fx:id="simulationDurationField" prefHeight="22.0" prefWidth="145.0" promptText="Длительность симуляции" />
+            <VBox alignment="CENTER" prefHeight="58.0" prefWidth="140.0">
+               <children>
+                  <Label text="Шаг в сек" />
+                  <Slider fx:id="secondsStepSlider" max="3600.0" min="1.0" value="600.0" />
+                  <Label fx:id="secondsStepSliderInfo" />
+               </children>
+            </VBox>
+            <TextField fx:id="dailySalaryOfClerksField" prefHeight="22.0" prefWidth="157.0" promptText="Дневная зарплата клерков" />
+            <VBox alignment="CENTER" prefHeight="58.0" prefWidth="230.0">
+               <children>
+                  <Label text="Интервал распределения клиентов" />
+                  <TextField fx:id="requestDistributionFromField" prefHeight="22.0" prefWidth="99.0" promptText="От" />
+                  <TextField fx:id="requestDistributionToField" prefHeight="22.0" prefWidth="96.0" promptText="До" />
+               </children>
+            </VBox>
+         </children>
+         <VBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+         <children>
+            <VBox alignment="CENTER" prefHeight="58.0" prefWidth="253.0">
+               <children>
+                  <Label text="Интервал длительности обслуживания" />
+                  <TextField fx:id="durationOfRequestServicingFromField" prefHeight="22.0" prefWidth="99.0" promptText="От" />
+                  <TextField fx:id="durationOfRequestServicingToField" prefHeight="22.0" prefWidth="96.0" promptText="До" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="58.0" prefWidth="230.0">
+               <children>
+                  <Label text="Диапозон стоимости обслуживания" />
+                  <TextField fx:id="profitOfRequestServicingFromField" prefHeight="22.0" prefWidth="99.0" promptText="От" />
+                  <TextField fx:id="profitOfRequestServicingToField" prefHeight="22.0" prefWidth="96.0" promptText="До" />
+               </children>
+            </VBox>
+         </children>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </HBox>
+   </children>
+</VBox>

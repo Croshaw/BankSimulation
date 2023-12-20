@@ -28,6 +28,15 @@ public class Clerk extends People {
         completedRequests = new HashMap<>();
         completedRequests.put(dateTimeOfHire.toLocalDate(), new ArrayList<>());
     }
+    public Request getCurrentTask() {
+        return currentTask;
+    }
+    public void finalizeWork() {
+        if(currentTask!=Request.NULL) {
+            currentTask.service(currentTask.getServiceDuration().toSeconds());
+            currentTask = Request.NULL;
+        }
+    }
     public long work(long secondsStep, Bank bank) {
         if(currentTask == Request.NULL || currentTask.isDone()) {
             if(currentTask != Request.NULL) {

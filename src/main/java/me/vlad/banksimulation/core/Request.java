@@ -26,6 +26,9 @@ public class Request {
         currentDuration = Duration.ZERO;
         waitingDuration = Duration.ZERO;
     }
+    public int getNumber() {
+        return number;
+    }
     public long service(long secondsStep) {
         Duration tempDur = currentDuration.plusSeconds(secondsStep);
         long dif = tempDur.minus(durationService).getSeconds();
@@ -59,11 +62,11 @@ public class Request {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Заявка № %d от %s\n".formatted(number, dateTimeOfCreation.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))));
-        sb.append("Клиент: %s".formatted(client.toShortString()));
+        sb.append("Клиент: %s\n".formatted(client.toShortString()));
         sb.append("Время ожидания: %s\n".formatted(DurationUtils.toString(waitingDuration)));
         sb.append("Время обслуживания: %s\n".formatted(DurationUtils.toString(durationService)));
         sb.append("Текущее время обслуживания: %s\n".formatted(DurationUtils.toString(currentDuration)));
-        sb.append("Цена: %.2f\n".formatted(price));
+        sb.append("Цена: %.2f".formatted(price));
         return sb.toString();
     }
 }

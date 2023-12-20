@@ -8,7 +8,6 @@ import me.vlad.banksimulation.util.Pair;
 
 import java.time.*;
 import java.util.*;
-import java.util.concurrent.SynchronousQueue;
 
 public class Bank {
     private final LocalDateTime dateTimeOfCreation;
@@ -81,6 +80,13 @@ public class Bank {
         infoBoard.work(clerk, queue.poll());
         return true;
     }
+    private void freeQueue() {
+        while(!queue.isEmpty()) {
+            numberOfLostClients.put(getCurrentDateTime().toLocalDate(), numberOfLostClients.getOrDefault(getCurrentDateTime().toLocalDate(), 0) + 1);
+            queue.poll();
+        }
+        number = 1;
+    }
     private long workByClerk(long secondsStep, Clerk clerk) {
         return clerk.work(secondsStep, this);
     }
@@ -120,14 +126,14 @@ public class Bank {
             var tempSchedule = schedule.get(prevDateTime.getDayOfWeek());
             long dif = Math.abs(Duration.between(tempSchedule.getFirst().plus(tempSchedule.getSecond()), prevDateTime).toSeconds());
             work(dif);
-            number = 1;
+            clerks.forEach(Clerk::finalizeWork);
+            freeQueue();
         } else if(!isWork(prevDateTime) && isWork(curDateTime)) {
             var tempSchedule = schedule.get(prevDateTime.getDayOfWeek());
             long dif = Math.abs(Duration.between(tempSchedule.getFirst(), prevDateTime).toSeconds());
             work(dif);
         } else {
-            if(number != 1)
-                number = 1;
+            freeQueue();
         }
     }
     public boolean isWork() {
@@ -142,17 +148,17 @@ public class Bank {
     public LocalDateTime getCurrentDateTime() {
         return dateTimeOfCreation.plus(currentDuration);
     }
-
     public Duration getCurrentDuration() {
         return currentDuration;
     }
-
     public int getMaxClerksCount() {
         return maxClerksCount;
     }
-
     public int getNumberRequest() {
         return number;
+    }
+    public InfoBoard getInfoBoard() {
+        return infoBoard;
     }
     public double getReputation() {
         if(!isWork())
@@ -274,7 +280,15 @@ public class Bank {
         }
         return profit;
     }
-
+    public HashSet<Clerk> getClerks() {
+        return clerks;
+    }
+    public Queue<Request> getQueue() {
+        return queue;
+    }
+    public int getQueueLimit() {
+        return maxQueueLength;
+    }
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -286,7 +300,8 @@ public class Bank {
         sb.append("Средняя длина очереди: %d\n".formatted(getAverageQueueLength()));
         sb.append("Среднее время ожидания клиентов: %s\n".formatted(DurationUtils.toString(getAverageRequestWaitingDuration())));
         sb.append("Средняя занятость клерков: %s\n".formatted(DurationUtils.toString(getAverageEmployment())));
-        sb.append("Полученная прибыль: %.02f".formatted(getTotalProfit()));
+        sb.append("Полученная прибыль: %.02f\n".formatted(getTotalProfit()));
+        sb.append("Репутация: %f".formatted(getReputation()));
         return sb.toString();
     }
 }
